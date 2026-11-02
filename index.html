@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Twitch Affiliate Progress Tracker (2026 Rules) | StreamGearLab</title>
+  <meta name="description" content="Track your progress to Twitch Affiliate: enter followers, stream days, minutes and viewer days from the last 30 days to see what is missing and a day-by-day plan." />
+  <link rel="canonical" href="https://streamgearlab.com/tools/twitch-affiliate-tracker/" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="inner">
+      <a class="brand" href="https://streamgearlab.com/"><img src="icon.svg" alt="" width="32" height="32" />StreamGearLab</a>
+      <a class="live-link" href="https://streamgearlab.com/tools/twitch-affiliate-tracker/">Use the live tool on streamgearlab.com →</a>
+    </div>
+  </header>
+  <main class="tool-page">
+    <header class="article-header tool-head">
+      <h1>Twitch Affiliate Progress Tracker</h1>
+      <p class="lead">Enter your last 30 days from the Twitch dashboard to see how close you are to Affiliate, what's still missing, and a realistic plan to get there.</p>
+      <p class="meta">Free, runs entirely in your browser, nothing is uploaded · Rules checked November 1, 2026</p>
+    </header>
+    <noscript><p class="notice">This tool needs JavaScript. The explanation below still works without it.</p></noscript>
+    <section class="tool-card" aria-label="Twitch Affiliate Progress Tracker tool">
+
+  <form id="aff-form" class="tool-form" novalidate>
+    <div class="field">
+      <label for="followers">Followers</label>
+      <input id="followers" name="followers" type="number" inputmode="numeric" min="0" step="1" value="12" />
+    </div>
+    <div class="field">
+      <label for="days">Unique days streamed (last 30 days)</label>
+      <input id="days" name="days" type="number" inputmode="numeric" min="0" max="31" step="1" value="3" />
+    </div>
+    <div class="field">
+      <label for="minutes">Minutes streamed (last 30 days)</label>
+      <input id="minutes" name="minutes" type="number" inputmode="numeric" min="0" step="1" value="150" />
+      <p class="hint">4 hours = 240 minutes.</p>
+    </div>
+    <div class="field">
+      <label for="vdays">Days with 3+ average viewers (last 30 days)</label>
+      <input id="vdays" name="vdays" type="number" inputmode="numeric" min="0" max="31" step="1" value="1" />
+      <p class="hint">Shown on your dashboard under Achievements → Path to Affiliate.</p>
+    </div>
+    <div class="field">
+      <label for="avg">Overall average viewers <span class="muted">(optional)</span></label>
+      <input id="avg" name="avg" type="number" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 2.4" />
+    </div>
+    <div class="field">
+      <label for="perweek">Days per week you can stream</label>
+      <select id="perweek" name="perweek">
+        <option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="len">Typical stream length (minutes)</label>
+      <input id="len" name="len" type="number" inputmode="numeric" min="15" step="15" value="90" />
+    </div>
+    <div class="field" style="justify-content:flex-end">
+      <label class="check"><input type="checkbox" id="remember" /> <span>Remember on this device (stored only in your browser)</span></label>
+    </div>
+    <div class="tool-actions span-2">
+      <button class="btn" type="submit">Check my progress</button>
+      <button class="btn ghost small" type="button" id="clear">Clear</button>
+      <span id="save-status" class="small muted" role="status"></span>
+    </div>
+  </form>
+  <div id="aff-results" class="results" aria-live="polite"></div>
+    </section>
+    <div class="reading-inner prose">
+<h2>What Twitch actually requires</h2>
+<p>Twitch's help page lists four goals, and you have to hit all of them <strong>within the same rolling 30-day window</strong>:</p>
+<ul>
+  <li><strong>Followers:</strong> at least 25.</li>
+  <li><strong>Time streamed:</strong> at least 4 hours in total.</li>
+  <li><strong>Stream days:</strong> at least 4 different days.</li>
+  <li><strong>Viewer days:</strong> an average of 3 or more concurrent viewers on at least 4 different days.</li>
+</ul>
+<p>You also need two-factor authentication turned on before Twitch can send the invite. These are lower than the older 50 followers / 8 hours / 7 days thresholds you'll still see quoted on some sites, and the tracker uses the current numbers.</p>
+<p>The goal people misread most is the viewer one. It isn't your overall average across the month. Twitch counts how many <em>days</em> your average was 3 or more. A day where you averaged 1.5 viewers doesn't hurt you, it just doesn't count. That's why the tracker asks for "days with 3+ average viewers". Your Creator Dashboard shows this under Achievements → Path to Affiliate. The optional overall average is only there to explain the difference if your numbers seem off.</p>
+<h3>How the plan is calculated</h3>
+<p>The tracker works out how many more stream days you need. That's the larger of your missing stream days and your missing viewer days, because every new viewer day has to be a new stream day too. It then spreads the minutes you're still missing across those days and uses your days-per-week figure to estimate how long it will take on the calendar. Because the window rolls, streams older than 30 days drop out of the count. If your plan takes more than about four weeks, earlier progress can disappear as you go. In that case, stream more days per week for a short burst rather than spreading it thin.</p>
+<h3>Growing the viewer days</h3>
+<p>Viewer numbers are the hardest goal, and the one you control least. Things that reliably help:</p>
+<ul>
+  <li><strong>Keep a fixed schedule</strong> so people know when to show up.</li>
+  <li><strong>Stream shorter</strong> on days you expect a crowd. An average over 2 hours is easier to keep at 3 than over 6.</li>
+  <li><strong>Network with streamers your size</strong>, take part in raids, and invite friends to your first few streams.</li>
+</ul>
+<p>Never buy followers or use view bots. Twitch treats artificial engagement as a rules violation. For the full strategy, read our <a href="https://streamgearlab.com/guides/how-to-reach-twitch-affiliate/">guide to reaching Twitch Affiliate</a>. To make sure your stream looks good for the people who do show up, run the <a href="https://streamgearlab.com/tools/obs-settings-generator/">OBS settings generator</a>.</p>
+      <h2 id="faq">Frequently asked questions</h2>
+      <div class="faq">
+      <details>
+        <summary>What are the Twitch Affiliate requirements?</summary>
+        <p>Within the same rolling 30 days you need at least 25 followers, at least 4 hours (240 minutes) streamed, streams on at least 4 different days, and an average of 3 or more concurrent viewers on at least 4 different days. Two-factor authentication must also be turned on.</p>
+      </details>
+      <details>
+        <summary>Does my overall average of 3 viewers count?</summary>
+        <p>Not by itself. Twitch counts the number of days on which your average was 3 or more concurrent viewers, and you need 4 such days. Days below 3 do not count against you, so 10 stream days with 4 good ones still qualifies.</p>
+      </details>
+      <details>
+        <summary>How long does the Affiliate invite take?</summary>
+        <p>Twitch says the invitation usually arrives by email and notification within 24 to 48 hours of meeting the requirements, and can take up to 72 hours. If it has been longer than 72 hours, Twitch suggests contacting support.</p>
+      </details>
+      <details>
+        <summary>Why do my numbers here differ from my dashboard?</summary>
+        <p>The Achievements page counts only the last 30 days, while other dashboard stats can show all-time totals. Twitch also counts days in GMT, so a late-night stream in your time zone can land on a different day than you expect.</p>
+      </details>
+      <details>
+        <summary>Can I earn money on Twitch before becoming an Affiliate?</summary>
+        <p>Since May 2026 Twitch has opened Bits, subscriptions and some other monetization features to all streamers, but Twitch says you need to reach Affiliate or Partner status to receive a payout.</p>
+      </details>
+      <details>
+        <summary>Are my numbers saved?</summary>
+        <p>Only if you tick "Remember on this device". They are then stored in your browser's local storage, never sent to us, and you can clear them at any time with the Clear button.</p>
+      </details>
+      </div>
+    </div>
+    <aside class="sources reading-inner">
+      <h2>Sources</h2>
+      <p class="small muted">The rules in this tool are based on these official pages, checked November 1, 2026. Platforms change their guidance; if a number here disagrees with the official page, the official page wins.</p>
+      <ul>
+      <li><a href="https://help.twitch.tv/s/article/joining-the-affiliate-program" rel="noopener" target="_blank">Twitch Help – Joining the Affiliate Program</a></li>
+      <li><a href="https://help.twitch.tv/s/article/achievements" rel="noopener" target="_blank">Twitch Help – Achievements</a></li>
+      <li><a href="https://blog.twitch.tv/en/2026/05/13/monetization-for-all/" rel="noopener" target="_blank">Twitch Blog – Monetization for all (May 13, 2026)</a></li>
+      </ul>
+    </aside>
+  </main>
+  <footer class="page-footer">
+    <p>Made by <a href="https://streamgearlab.com/">StreamGearLab</a>, plain-English guides and free tools for streamers. Live version: <a href="https://streamgearlab.com/tools/twitch-affiliate-tracker/">https://streamgearlab.com/tools/twitch-affiliate-tracker/</a></p>
+    <p>Open source under the MIT License.</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
